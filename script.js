@@ -1,6 +1,5 @@
 const os = require('os');
-const EventEmitter = require('events');
-const emitter = new EventEmitter();
+const path = require('path');
 let totalMemo = os.totalmem();
 let freeMemo = os.freemem();
 
@@ -14,12 +13,15 @@ let files = fs.readdirSync('./')
 console.log(`files : ${files}`)
 
 
-emitter.on('messageLogged', (arg) => {
-    console.log("Listener called")
-    console.log(arg)
+
+const Logger = require('./logger')
+const logger = new Logger();
+
+logger.on('messageLogged', (arg) => {
+    console.log('Listener called', arg)
 })
 
-emitter.emit('messageLogged', {
-    id: 1,
-    data: "The user is moving the mouse"
-});
+logger.log('mesajoool')
+
+var pathObj = path.parse(__filename);
+console.log(pathObj);
